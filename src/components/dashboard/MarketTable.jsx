@@ -64,12 +64,12 @@ function MarketTable() {
             <th>Coin</th>
             <th>Price</th>
             <th>24h</th>
-            <th>Market Cap</th>{" "}
+            <th>Market Cap</th>
           </tr>
         </thead>
         <tbody>
           {coins.map((item, index) => (
-            <CoinRow key={index} coin={item} />
+            <CoinRow key={item.id} coin={item} />
           ))}
         </tbody>
       </table>

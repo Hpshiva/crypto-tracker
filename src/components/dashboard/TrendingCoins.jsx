@@ -1,15 +1,3 @@
-// function TrendingCoins() {
-//   return (
-//     <section className="rounded-xl border border-slate-800 bg-slate-900 p-5">
-//       <h2 className="mb-4 text-xl font-semibold">Trending Coins</h2>
-
-//       <p className="text-slate-400">Coin data coming soon...</p>
-//     </section>
-//   );
-// }
-
-// export default TrendingCoins;
-
 import { useState, useEffect } from "react";
 import coinGeckoApi from "../../api/coinGeckoApi";
 
@@ -21,7 +9,6 @@ function TrendingCoins() {
   useEffect(() => {
     setLoading(true);
 
-    // axios
     async function fetchTreadingCoins() {
       try {
         const response = await coinGeckoApi.get("/search/trending");
@@ -64,7 +51,7 @@ function TrendingCoins() {
           <tr className="text-left text-slate-400">
             <th>Rank</th>
             <th>Coin</th>
-            <th>Symbol</th>{" "}
+            <th>Symbol</th>
           </tr>
         </thead>
         <tbody>
