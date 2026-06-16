@@ -1,42 +1,28 @@
-import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import coinGeckoApi from "../../api/coinGeckoApi";
+import useCryptoData from "../../hooks/useCryptoData";
+import ErrorMessage from "../shared/ErrorMessage";
+import Loading from "../shared/Loading";
 
 function TrendingCoins() {
-  const [trendingCoins, setTrendingCoins] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const {
+    data: trendingCoins,
+    loading,
+    error,
+  } = useCryptoData("/search/trending", {}, (response) => response.data.coins);
 
-  useEffect(() => {
-    setLoading(true);
-
-    async function fetchTreadingCoins() {
-      try {
-        const response = await coinGeckoApi.get("/search/trending");
-        setTrendingCoins(response.data.coins);
-      } catch (error) {
-        setError(error.message || "Something went wrong");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchTreadingCoins();
-  }, []);
   if (loading) {
-    return (
-      <section className="rounded-xl border border-slate-800 bg-slate-900 p-5">
-        <h2 className="mb-4 text-xl font-semibold">Trending Coins</h2>
-
-        <p className="text-slate-400">Loading...</p>
-      </section>
-    );
+    return;
+    <section className="rounded-xl border border-slate-800 bg-slate-900 p-5">
+      <h2 className="mb-4 text-xl font-semibold">Treading Coins</h2>
+      <p className="text-slate-400">Loading...</p>
+    </section>;
   }
 
   if (error) {
     return (
       <section className="rounded-xl border border-slate-800 bg-slate-900 p-5">
         <h2 className="mb-4 text-xl font-semibold">Trending Coins</h2>
-
         <p className="text-red-400">{error}</p>
       </section>
     );
@@ -60,14 +46,16 @@ function TrendingCoins() {
               <tr key={item.item.id} className="border-b border-slate-800">
                 <td>{item.item.market_cap_rank}</td>
                 <td className="py-4">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={item.item.small}
-                      alt={item.item.name}
-                      className="h-8 w-8"
-                    />
-                    <span>{item.item.name}</span>
-                  </div>
+                  <Link to={`/coin/${item.item.id}`}>
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={item.item.small}
+                        alt={item.item.name}
+                        className="h-8 w-8"
+                      />
+                      <span>{item.item.name}</span>
+                    </div>
+                  </Link>
                 </td>
 
                 <td>{item.item.symbol}</td>

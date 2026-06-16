@@ -1,12 +1,17 @@
+import { Link } from "react-router-dom";
+
 function CoinRow({ coin }) {
+
   return (
     <tr className="border-b border-slate-800">
       <td className="py-4">
-        <div className="flex items-center gap-3">
-          <img src={coin.image} alt={coin.name} className="h-8 w-8" />
+        <Link to={`/coin/${coin.id}`}>
+          <div className="flex items-center gap-3">
+            <img src={coin.image} alt={coin.name} className="h-8 w-8" />
 
-          <span>{coin.name}</span>
-        </div>
+            <span>{coin.name}</span>
+          </div>
+        </Link>
       </td>
 
       <td>${coin.current_price.toLocaleString()}</td>
